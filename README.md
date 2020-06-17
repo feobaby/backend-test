@@ -18,8 +18,8 @@
 ## :star: Technologies Used
 
 1. Node.js and Express.js
-2. Sequelize ODM
-3. MongoDB
+2. Sequelize ORM
+3. PostgreSQL
 4. Git
 
 ## :sunny: Sample .env file format
@@ -130,5 +130,9 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
    
   GET `http://localhost:3000/api/v1/account/view`  
   
-## Developed by
+
+## Api documentation: 
+https://documenter.getpostman.com/view/5981739/SzzkawLN
+
+## Developed by:
 Funmilayo E. Olaiya   
