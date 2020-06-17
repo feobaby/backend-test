@@ -5,6 +5,19 @@ notifications:
   email: false
 services:
   - postgresql
+env:
+  global:
+  - CC_TEST_REPORTER_ID=cdf6c5f6b8792ff5f920dec13f831539c7768b45d4da60bd2f5be321b249ed02
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - npm run test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 cache:
   directories:
     - "node_modules"
+after_success:
+- npm run coverage
