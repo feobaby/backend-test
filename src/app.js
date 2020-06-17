@@ -1,6 +1,7 @@
 import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import router from './routes/index.routes';
 
 config();
 
@@ -21,7 +22,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.get('/noRoute', (req, res) => {
+app.get('*', (req, res) => {
   res.status(404)
     .json({
       status: 404,

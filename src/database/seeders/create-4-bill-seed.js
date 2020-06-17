@@ -1,0 +1,45 @@
+export default {
+    up: (queryInterface) => queryInterface.bulkInsert(
+        'Bills',
+        [
+            {
+                userId: '7aa38d4e-7fbf-4067-8821-9c27d2fb6e3a',
+                accountId: '6c8f5528-c442-477e-97f0-75c8e0c62f33',
+                airtime: 'Airtel',
+                phoneNumber: '09090999393',
+                amount: '1000.00',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                userId: '7aa38d4e-7fbf-4067-8821-9c27d2fb6e3a',
+                accountId: '6c8f5528-c442-477e-97f0-75c8e0c62f33',
+                electricity: 'Abuja Electricity',
+                meterNo: '1234567890',
+                amount: '1000.00',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                userId: 'ea38fb9a-57ab-4d07-9c6b-01e0b429d101',
+                accountId: 'f87a05a7-8a66-42c7-b2a6-e630dc2cd2b2',
+                airtime: 'Mtn',
+                phoneNumber: '09090999454',
+                amount: '1000.00',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+            {
+                userId: 'ea38fb9a-57ab-4d07-9c6b-01e0b429d101',
+                accountId: 'f87a05a7-8a66-42c7-b2a6-e630dc2cd2b2',
+                electricity: 'Eko Electricity',
+                meterNo: '1234567891',
+                amount: '1000.00',
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            },
+        ],
+        {},
+    ),
+    down: (queryInterface) => queryInterface.bulkDelete('Bills', null, {}),
+};
