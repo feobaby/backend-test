@@ -4,7 +4,7 @@ import Authenticate from '../middlewares/authenticate';
 import ValidateTransactions from '../middlewares/validators/accounts';
 
 const {
-  getAccount, transferMoney, createAccount
+  getAccount, transferMoney, depositMoney
 } = AccountsController;
 
 const {
@@ -16,7 +16,7 @@ const { verifyToken } = Authenticate;
 const router = express.Router();
 
 router.post('/send/:accountId', verifyToken, sendMoneyValidation, transactionValidation, transferMoney);
-router.post('/create', verifyToken, createAccount);
 router.get('/view', verifyToken, getAccount);
+router.post('/deposit/:accountId', verifyToken, depositMoney);
 
 export default router;

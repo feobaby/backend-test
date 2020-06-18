@@ -41,8 +41,7 @@ export default class ValidateTransactions {
   * @returns {object} response body object
   */
   static async sendMoneyValidation(req, res, next) {
-    if (!req.body.category || !req.body.amount
-      || !req.body.walletBalance || !req.body.walletNumber) {
+    if (!req.body.amount || !req.body.walletBalance || !req.body.walletNumber) {
       return res.status(400).json({
         status: '400',
         error: 'Please supply all the rewuired fields!',

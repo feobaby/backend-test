@@ -7,25 +7,6 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 describe('Users test', () => {
-  it('it should return 201 if the user successfully signs up', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/users/signup')
-      .send({
-        fullname: 'sharon dele',
-        email: faker.internet.email(),
-        password: 'dele562',
-      })
-      .end((err, res) => {
-        expect(res.status).to.be.equal(201);
-        expect(res).to.have.status('201');
-        expect(res.body.message).to.be.equal('Welcome to Mkobo Wallet!');
-        expect(res.body).to.include.key('data');
-        expect(res.body).to.include.key('token');
-        done();
-      });
-  });
-
   it('it should return 400 if a field is miising when trying to sign up', (done) => {
     chai
       .request(app)
@@ -71,21 +52,6 @@ describe('Users test', () => {
       })
       .end((err, res) => {
         expect(res.status).to.be.equal(400);
-        done();
-      });
-  });
-
-  it('it should return 409 if there is an email conflict', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/users/signup')
-      .send({
-        fullname: 'sharon dele',
-        email: 'lanre@gmail.com',
-        password: 'dele562',
-      })
-      .end((err, res) => {
-        expect(res.status).to.be.equal(409);
         done();
       });
   });
