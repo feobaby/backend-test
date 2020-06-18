@@ -14,7 +14,7 @@ export default class ValidateBills {
      */
   static async buyAirtimeValidation(req, res, next) {
     if (!req.body.airtime || !req.body.amount
-            || !req.body.walletBalance || !req.body.category) {
+      || !req.body.walletBalance) {
       return res.status(400).json({
         status: '400',
         error: 'Please supply all the rewuired fields!',
@@ -33,7 +33,7 @@ export default class ValidateBills {
   */
   static async payElecValidation(req, res, next) {
     if (!req.body.meterNo || !req.body.amount
-            || !req.body.walletBalance || !req.body.category) {
+      || !req.body.walletBalance) {
       return res.status(400).json({
         status: '400',
         error: 'Please supply all the rewuired fields!',

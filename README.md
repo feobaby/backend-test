@@ -40,9 +40,11 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
 
    ```
    {
-	"fullname": "Ayinke Williams",
-	"email": "ayinwill@gmail.com",
-	"password": "ayin.will",
+	"fullname": "dele odule",
+	"email": "lanre192@gmail.com",
+	"password": "lanre1234",
+	"walletNumber": "380888",
+	"walletBalance": "777272"
 }
    ```
 
@@ -56,20 +58,8 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
 	"password": "ayin.will",
 }
    ```
-<h4>3. To create account after sign up:</h4>
-  
-  - let us assume a unique wallet number has been generated for you
-   
-  POST `http://localhost:3000/api/v1/account/create`
 
-   ```
-   {
-	"walletNumber": "93093",
-	"walletBalance": "200000"
-}
-   ```
-
-<h4> 4. To send money to another wallet</h4>
+<h4> 3. To send money to another wallet</h4>
    
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
@@ -86,6 +76,24 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
 	"message": "for tolu's party" 
 }
    ```   
+
+<h4> 4. To deposit money to account </h4>
+   
+   - Authentication required after sign up/in: _Bearer token_
+   - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
+   - the _id_ at the route params represents the _accountId_ of an account/user
+   
+  POST `http://localhost:3000/api/v1/account/send/6c8f5528-c442-477e-97f0-75c8e0c62f33`
+   
+   ```
+   {
+	"walletBalance": "800",
+	"category": "transfer money",
+	"amount": "100",
+	"walletNumber": "9098765",
+	"message": "for tolu's party" 
+}
+   ```      
    
 <h4>5. To buy airtime</h4>
    

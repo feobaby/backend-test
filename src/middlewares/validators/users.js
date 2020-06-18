@@ -1,5 +1,5 @@
 import {
-  emailRegExp, nameRegExp,
+  emailRegExp, nameRegExp, wallNumRegExp
 } from '../../utils/index';
 
 /**
@@ -46,12 +46,17 @@ export default class ValidateUsers {
      */
   static fieldValidation(req, res, next) {
     const {
-      fullname, email, password
+      fullname, email, password, walletNumber, walletBalance
     } = req.body;
-    if (!fullname || !email || !password) {
+    if (!fullname || !email || !password || !walletNumber || !walletBalance) {
       return res.status(400).json({
         status: '400',
         error: 'Please, supply the fields!',
+      });
+    } if (!walletNumber.match(wallNumRegExp)) {
+      return res.status(400).json({
+        status: '400',
+        error: 'Only 6 digits please',
       });
     }
     next();

@@ -2,6 +2,7 @@ import models from '../models';
 
 const { Accounts, Users, Transactions } = models;
 
+// associations for when a user wants to view his/her account
 const account = [
   {
     model: Users,
@@ -22,26 +23,31 @@ const account = [
  */
 export default class AccountsController {
   /**
-          * @method transferMoney
-          * @description method for tranferring money to another wallet number
-          * @param {object} req
-          * @param {object} res
-          * @returns {object} Returns body object
-          */
+      * @method transferMoney
+      * @description method for tranferring money to another wallet number
+      * @param {object} req
+      * @param {object} res
+      * @returns {object} Returns body object
+      */
   static async transferMoney(req, res) {
     try {
       const { userId } = req.user;
       const { accountId } = req.params;
       const {
-        category, message, amount, walletNumber, walletBalance,
+        message, amount, walletNumber, walletBalance,
       } = req.body;
+      const check = await Accounts.findOne({ where: { walletNumber } });
+      if (!check) {
+        return res.status(404).json({
+          status: '404',
+          message: 'This wallet number does not exist',
+        });
+      }
       await Transactions.create({
-        userId, accountId, category, message, amount, walletBalance, walletNumber
+        userId, accountId, category: 'transfer money', message, amount, walletBalance, walletNumber
       });
-      const currentBalance = (walletBalance - amount);
-      await Transactions.update({
-        walletBalance: currentBalance
-      }, { where: { userId } });
+      const currentBalance = parseFloat(walletBalance) - parseFloat(amount);
+      // to update the account of the current blance after a transaction
       await Accounts.update({
         walletBalance: currentBalance
       }, { where: { userId } });
@@ -49,7 +55,7 @@ export default class AccountsController {
         status: '200',
         message: 'Success!',
         data: {
-          category, message, amount, currentBalance, walletNumber
+          category: 'transfer money', message, amount, currentBalance, walletNumber
         }
       });
     } catch (error) {
@@ -58,31 +64,33 @@ export default class AccountsController {
   }
 
   /**
-        * @method createAccount
-        * @description method for creating account after signing up
-        * @param {object} req
-        * @param {object} res
-        * @returns {object} Returns body object
-        */
-  static async createAccount(req, res) {
+      * @method depositMoney
+      * @description method for depositing money to the available wallet balance
+      * @param {object} req
+      * @param {object} res
+      * @returns {object} Returns body object
+      */
+  static async depositMoney(req, res) {
     try {
       const { userId } = req.user;
+      const { accountId } = req.params;
       const {
-        walletNumber, walletBalance,
+        amount, walletBalance,
       } = req.body;
-      const wallet = await Accounts.findOne({ where: { walletNumber } });
-      if (wallet) {
-        return res.status(409)
-          .json({ status: '409', message: 'It seems this account has been created already...' });
-      }
-      await Accounts.create({
-        userId, walletBalance, walletNumber
+      // to create the transaction(for history purposes)
+      await Transactions.create({
+        userId, accountId, category: 'deposit', amount, walletBalance,
       });
-      return res.status(201).json({
-        status: '201',
+      const currentBalance = parseFloat(walletBalance) + parseFloat(amount);
+      // to update the account of the current blance after a transaction
+      await Accounts.update({
+        walletBalance: currentBalance
+      }, { where: { userId } });
+      return res.status(200).json({
+        status: '200',
         message: 'Success!',
         data: {
-          walletBalance, walletNumber
+          category: 'deposit', amount, currentBalance,
         }
       });
     } catch (error) {
@@ -110,7 +118,6 @@ export default class AccountsController {
       }
       return res.status(200).json({ status: '200', message: 'Success!', data: result });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({ status: '500', message: 'Oops, there\'s an error!' });
     }
   }

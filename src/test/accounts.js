@@ -60,29 +60,6 @@ describe('Test for Account Endpoints', () => {
         });
     });
 
-    it('should return 409 if wallet number conflicts upon account creation', (done) => {
-      chai.request(app)
-        .post('/api/v1/users/signin')
-        .set('Accept', 'application/json')
-        .send(login)
-        .end((logError, logResponse) => {
-          const token = `Bearer ${logResponse.body.token}`;
-          chai.request(app)
-            .post('/api/v1/account/create')
-            .set('Authorization', token)
-            .send({
-              walletNumber: '0909098',
-              walletBalance: '200000'
-            })
-            .end((err, res) => {
-              expect(res.status).to.be.equal(409);
-              expect(res).to.have.status('409');
-              expect(res.body.message).to.be.equal('It seems this account has been created already...');
-              done();
-            });
-        });
-    });
-
     it('should return 200 for successful transfer', (done) => {
       chai.request(app)
         .post('/api/v1/users/signin')
@@ -119,10 +96,8 @@ describe('Test for Account Endpoints', () => {
             .post('/api/v1/account/send/6c8f5528-c442-477e-97f0-75c8e0c62f33')
             .set('Authorization', token)
             .send({
-              walletBalance: '800',
               amount: '100',
               walletNumber: '9098765',
-              message: "for tolu's party"
             })
             .end((err, res) => {
               expect(res.status).to.be.equal(400);

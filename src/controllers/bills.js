@@ -20,15 +20,14 @@ export default class BillsController {
       const { userId } = req.user;
       const { accountId } = req.params;
       const {
-        category, message, amount, airtime, walletBalance,
+        message, amount, airtime, walletBalance,
       } = req.body;
+      // to log the transactions
       await Transactions.create({
-        userId, accountId, category, message, amount, walletBalance
+        userId, accountId, category: 'pay airtime', message, amount, walletBalance
       });
       const currentBalance = (walletBalance - amount);
-      await Transactions.update({
-        walletBalance: currentBalance
-      }, { where: { userId } });
+      // to update wallet balance
       await Accounts.update({
         walletBalance: currentBalance
       }, { where: { userId } });
@@ -39,7 +38,7 @@ export default class BillsController {
         status: '200',
         message: 'Success!',
         data: {
-          userId, accountId, category, message, amount, currentBalance, airtime
+          userId, accountId, category: 'pay airtime', message, amount, currentBalance, airtime
         }
       });
     } catch (error) {
@@ -59,18 +58,18 @@ export default class BillsController {
       const { userId } = req.user;
       const { accountId } = req.params;
       const {
-        category, message, amount, electricity, walletBalance, meterNo,
+        message, amount, electricity, walletBalance, meterNo,
       } = req.body;
+      // to log in the transactions
       await Transactions.create({
-        userId, accountId, category, message, amount, walletBalance
+        userId, accountId, category: 'pay for electricity', message, amount, walletBalance
       });
       const currentBalance = (walletBalance - amount);
-      await Transactions.update({
-        walletBalance: currentBalance
-      }, { where: { userId } });
+      // to update wallet balance
       await Accounts.update({
         walletBalance: currentBalance
       }, { where: { userId } });
+      // to represent the table holding the bills
       await Bills.create({
         userId, accountId, electricity, amount, meterNo,
       });
@@ -78,7 +77,7 @@ export default class BillsController {
         status: '200',
         message: 'Success!',
         data: {
-          userId, accountId, category, meterNo, message, amount, currentBalance, electricity
+          userId, accountId, category: 'pay for electricity', meterNo, message, amount, currentBalance, electricity
         }
       });
     } catch (error) {

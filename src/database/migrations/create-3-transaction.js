@@ -28,7 +28,7 @@ export default {
         onDelete: 'CASCADE'
       },
       category: {
-        type: Sequelize.ENUM('transfer money', 'pay airtime', 'pay for electricity'),
+        type: Sequelize.ENUM('transfer money', 'deposit', 'pay airtime', 'pay for electricity'),
         allowNull: false,
       },
       message: {
