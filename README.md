@@ -4,6 +4,7 @@
 
 # Mkobo Backend Test
 
+_For testing  locally_
 ## :rocket: Quick start
 
 1.  Have Git and Node.js installed on your computer.
@@ -27,7 +28,7 @@
 ```
 
 SECRET = 
-DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobodev_db
+DEV_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobodev_db
 TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db 
 
 ```
@@ -36,21 +37,21 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
 
 <h4>1. To sign up:</h4>
 
-  POST `http://localhost:3000/api/v1/users/signup`
+  POST `https://mkobo.herokuapp.com/api/v1/users/signup`
 
    ```
    {
-	"fullname": "dele odule",
-	"email": "lanre192@gmail.com",
-	"password": "lanre1234",
-	"walletNumber": "380888",
-	"walletBalance": "777272"
+	"fullname": "Ayinke williams",
+	"email": "ayinwill@gmail.com",
+	"password": "ayiin.will",
+	"walletNumber": "676767",
+	"walletBalance": "70000"
 }
    ```
 
 <h4>2. To sign in:</h4>
    
-  POST `http://localhost:3000/api/v1/users/signin`
+  POST `https://mkobo.herokuapp.com/api/v1/users/signin`
 
    ```
    {
@@ -61,19 +62,17 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
 
 <h4> 3. To send money to another wallet</h4>
    
+   - *NOTE* - the account id is the _account.id_ in the response body after sign up.
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
-   - the _id_ at the route params represents the _accountId_ of an account/user
    
-  POST `http://localhost:3000/api/v1/account/send/6c8f5528-c442-477e-97f0-75c8e0c62f33`
+  POST `https://mkobo.herokuapp.com/api/v1/account/send/<account id>`
    
    ```
    {
-	"walletBalance": "800",
-	"category": "transfer money",
-	"amount": "100",
-	"walletNumber": "9098765",
-	"message": "for tolu's party" 
+	"walletBalance": "70000", // copy the current wallet balance
+	"amount": "100", // amount to send - minimum
+	"walletNumber": "9098765" // wallet number of another user
 }
    ```   
 
@@ -81,17 +80,14 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
    
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
-   - the _id_ at the route params represents the _accountId_ of an account/user
    
-  POST `http://localhost:3000/api/v1/account/send/6c8f5528-c442-477e-97f0-75c8e0c62f33`
+  POST `https://mkobo.herokuapp.com/api/v1/account/deposit/<account id>`
    
    ```
    {
-	"walletBalance": "800",
-	"category": "transfer money",
+	"walletBalance": "69900", // copy the current wallet balance
 	"amount": "100",
-	"walletNumber": "9098765",
-	"message": "for tolu's party" 
+	"walletNumber": "9098765"
 }
    ```      
    
@@ -99,15 +95,12 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
    
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
-   - the _id_ at the route params represents the _accountId_ of an account/user
    
-  POST `http://localhost:3000/api/v1/bill/airtime/6c8f5528-c442-477e-97f0-75c8e0c62f33`
+  POST `https://mkobo.herokuapp.com/api/v1/bill/airtime/<account_id>`
    
    ```
    {
-	"walletBalance": "1000", // copy and paste the wallet balance after any transaction
-	"category": "pay airtime",
-	"messsage": "optional",
+	"walletBalance": "70000", // copy the current wallet balance
 	"amount": "100",
 	"airtime": "Mtn" ,
 }
@@ -117,16 +110,14 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
    
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
-   - the _id_ at the route params represents the _accountId_ of an account/user
    
-  POST `http://localhost:3000/api/v1/bill/electricity/6c8f5528-c442-477e-97f0-75c8e0c62f33`
+  POST `https://mkobo.herokuapp.com/api/v1/bill/electricity/<account id>`
    
    ```
    {
-	"walletBalance": "100",
-	"category": "pay for electricity",
+	"walletBalance": "69900", // copy the current wallet balance
 	"amount": "100",
-    "electricity": "Abuja Electricity",
+   "electricity": "Abuja Electricity",
 	"meterNo": "7878787878"
 }
    ```   
@@ -136,11 +127,7 @@ TEST_DATABASE_URL=postgres://<db_user>:<db_pass>@127.0.0.1:5432/mkobotest_db
    - Authentication required after sign up/in: _Bearer token_
    - add the _token_ gotten from sign up/in to the Bearer field of postman/insomnia
    
-  GET `http://localhost:3000/api/v1/account/view`  
+  GET `https://mkobo.herokuapp.com/api/v1/account/view`  
   
-
-## Api documentation: 
-https://documenter.getpostman.com/view/5981739/SzzkawLN
-
 ## Developed by:
 Funmilayo E. Olaiya   
